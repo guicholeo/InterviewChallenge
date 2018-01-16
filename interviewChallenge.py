@@ -1,3 +1,5 @@
+from operator import itemgetter
+
 dataset = {'A': (1,1),
 			'B':(2,5),
 			'C':(3,8),
@@ -15,3 +17,9 @@ for key in dataset:
 	values = dataset[key];
 	pricePerOne = float(values[0]) / values[1];
 	dataset[key]  = values + (pricePerOne,);
+
+#sort dictionary by the pricePerOne
+
+itemsInside = dataset.items();
+itemsInside.sort(key=lambda x:x[1][2], reverse=True);
+print(itemsInside);
