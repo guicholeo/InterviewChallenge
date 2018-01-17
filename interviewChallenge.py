@@ -12,37 +12,44 @@ dataset = {'A': (1,1),
 			'J':(10,30)
 			}
 
-#find the price per one and add to  dictionary
-# totalRequested = 0;
-# for key in dataset:
-# 	values = dataset[key];
-# 	totalRequested +=values[0];
-# 	pricePerOne = float(values[0]) / values[1];
-# 	dataset[key]  = values + (pricePerOne,);
-
-# #sort dictionary by the pricePerOne
-
 itemsInside = dataset.items();
-# itemsInside.sort(key=lambda x:x[1][2], reverse=True);
-# print(totalRequested);
 
-# if (totalRequested == total):
-# 	print("Sell to all companies");
-# else:
-# 	recursive
 
 dataSetLength = len(itemsInside);
 
-print(dataSetLength);
 
 def findTheCompanies(index,currentList, allLists, totalAmount):
-	if totalAmount == sum(currentList):
+	priceAndSum = findTheSum(currentList)
+	#print(priceAndSum[1]);
+	if totalAmount == priceAndSum[0]:
+		
+		currentList.append(("Total",priceAndSum[1]));
 		allLists.append(currentList);
-	elif totalAmount < sum(currentList):
+		#currentList.remove(len(currentList)-1);
+	elif totalAmount < priceAndSum[0]:
 		return
 	for i in range(index, dataSetLength):
-		findTheCompanies(i+1,currentList + [itemsInside[i][1][0]],allLists,totalAmount);
+		#print(itemsInside[i]);
+		findTheCompanies(i+1,currentList + [itemsInside[i]],allLists,totalAmount);
 	return allLists;
 
-print(findTheCompanies(0,[],[],25));
 
+
+def findTheSum(listWithInfo):
+	
+	if not listWithInfo:
+		return (0,0);
+	else:
+		totalPrice = 0;
+		totalSum = 0;
+
+		for i in listWithInfo:
+			if i[0] != "Total":
+				totalSum +=i[1][0];
+				totalPrice += i[1][1];
+		return (totalSum,totalPrice);
+
+allthe = findTheCompanies(0,[],[],25)
+
+for j in allthe:
+	print(j);
