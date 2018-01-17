@@ -1,6 +1,9 @@
 #recursion method idea obtained from here: 
 #https://stackoverflow.com/questions/20193555/finding-combinations-to-the-provided-sum-value
 
+totalAmount = 60;
+moreThanNeeded = False;
+remainder = 0;
 
 #dataset given
 dataset = {'A': (1,1),
@@ -18,13 +21,15 @@ dataset = {'A': (1,1),
 #get items so its iterable
 itemsInside = dataset.items();
 
-
+totalRequesting = 0;
+for t in itemsInside:
+	totalRequesting += t[1][0];
 dataSetLength = len(itemsInside);
 
 
 #recursive function which checks which companies add up to the total items available
 def findTheCompanies(index,currentList, allLists, totalAmount):
-	priceAndSum = findTheSum(currentList)
+	priceAndSum = findTheSum(currentList);
 	#print(priceAndSum[1]);
 	#checks if the sum of the companies equals the total amount provided, if it matches it adds the list a another lis
 	#where it has all the lists that have matched the total amount, else returns nothing
@@ -54,7 +59,14 @@ def findTheSum(listWithInfo):
 				totalPrice += i[1][1];
 		return (totalSum,totalPrice);
 
-allTheLists = findTheCompanies(0,[],[],25)
+
+#checks if the amount available is more than the amount requesting by the companies
+if totalAmount > totalRequesting:
+	remainder = totalAmount - totalRequesting;
+	totalAmount = totalRequesting;
+	moreThanNeeded = True;
+
+allTheLists = findTheCompanies(0,[],[],totalAmount);
 
 #sorts the list based on the total price
 allTheLists.sort(key=lambda x:x[len(x)-1][1], reverse=True)
@@ -68,4 +80,5 @@ for i in range(0,length-1):
 	#print(i[0] + " " + str(i[1][0]));
 print("\n" + "To give a total profit of " + "$"+ str(firstList[length-1][1]));
 
-
+if moreThanNeeded:
+	print("Remainder of items: " + str(remainder));
