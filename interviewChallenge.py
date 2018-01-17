@@ -1,9 +1,5 @@
 from operator import itemgetter
 
-totalAmount = 25;
-
-companies = [];
-
 dataset = {'A': (1,1),
 			'B':(2,5),
 			'C':(3,8),
@@ -37,6 +33,7 @@ itemsInside = dataset.items();
 
 dataSetLength = len(itemsInside);
 
+print(dataSetLength);
 
 def findTheCompanies(index,currentList, allLists, totalAmount):
 	if totalAmount == sum(currentList):
@@ -44,7 +41,7 @@ def findTheCompanies(index,currentList, allLists, totalAmount):
 	elif totalAmount < sum(currentList):
 		return
 	for i in range(index, dataSetLength):
-		findTheCompanies(i,currentList + [itemsInside[i]],allLists,totalAmount);
+		findTheCompanies(i+1,currentList + [itemsInside[i][1][0]],allLists,totalAmount);
 	return allLists;
 
 print(findTheCompanies(0,[],[],25));
